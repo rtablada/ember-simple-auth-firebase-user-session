@@ -1,6 +1,6 @@
 # Ember-simple-auth-firebase-user-session
 
-This Ember addon is an opinionated session storage for 
+This Ember addon is an opinionated session storage for using Firebase with Ember Simple Auth.
 
 ## Installation
 

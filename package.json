@@ -1,7 +1,7 @@
 {
   "name": "ember-simple-auth-firebase-user-session",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "An opinionated session storage for using Firebase with Ember Simple Auth",
   "directories": {
     "doc": "doc",
     "test": "tests"
