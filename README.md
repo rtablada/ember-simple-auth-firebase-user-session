@@ -7,7 +7,7 @@ This Ember addon is an opinionated session storage for
 * For ember projects run `ember install ember-simple-auth-firebase-user-session`
 
 The associated generator with this package will add `session: 'session:with-user'` to your `simple-auth` config.
-You will want to check your `config/environment.js` file to see if this was successful or the session service will not be pulled in properly.
+If you already have any `simple-auth` configuration in your `config/environment.js` file, you will need to manually add this setting.
 
 ## Use
 
