@@ -4,15 +4,29 @@ import Session from 'simple-auth/session';
 var ObjectPromiseProxy = Ember.ObjectProxy.extend(Ember.PromiseProxyMixin);
 
 export default Session.extend({
-  currentUser: function() {
-    var uid = this.get('content.secure.auth.uid');
+  firebase: Ember.inject.service(),
 
+  getCurrentUser: function() {
+    var firebase = this.get('firebase');
+    var authData = firebase.getAuth();
+    var {provider, uid} = authData.auth;
+
+    return new Ember.RSVP.Promise((resolve) => {
+      this.get('dataStore').query('user', {orderBy: 'uid', equalTo: uid}).then((users) => {
+        var user = users.get('firstObject');
+
+        if (user) {
+          return resolve(user);
+        } else {
+          user = this.get('dataStore').createRecord('user', {uid, provider});
+          resolve(user.save());
+        }
+      });
+    });
+  },
+  currentUser: function() {
     return ObjectPromiseProxy.create({
-      promise: new Ember.RSVP.Promise((resolve) => {
-        this.get('dataStore').query('user', {orderBy: 'uid', equalTo: uid}).then((users) => {
-          resolve(users.get('firstObject'));
-        });
-      })
+      promise: this.getCurrentUser()
     });
   }.property('content.secure.user')
 });
