@@ -19,7 +19,10 @@ export default Session.extend({
           return resolve(user);
         } else {
           user = this.get('dataStore').createRecord('user', {uid, provider});
-          resolve(user.save());
+
+          user.save().then(() => {
+            resolve(user);
+          });
         }
       });
     });
