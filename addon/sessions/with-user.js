@@ -9,23 +9,26 @@ export default Session.extend({
   getCurrentUser: function() {
     var firebase = this.get('firebase');
     var authData = firebase.getAuth();
-    var {provider, uid} = authData.auth;
 
-    return new Ember.RSVP.Promise((resolve) => {
-      this.get('dataStore').query('user', {orderBy: 'uid', equalTo: uid}).then((users) => {
-        var user = users.get('firstObject');
+    if (authData) {
+      var {provider, uid} = authData.auth;
 
-        if (user) {
-          return resolve(user);
-        } else {
-          user = this.get('dataStore').createRecord('user', {uid, provider});
+      return new Ember.RSVP.Promise((resolve) => {
+        this.get('dataStore').query('user', {orderBy: 'uid', equalTo: uid}).then((users) => {
+          var user = users.get('firstObject');
 
-          user.save().then(() => {
-            resolve(user);
-          });
-        }
+          if (user) {
+            return resolve(user);
+          } else {
+            user = this.get('dataStore').createRecord('user', {uid, provider});
+
+            user.save().then(() => {
+              resolve(user);
+            });
+          }
+        });
       });
-    });
+    }
   },
   currentUser: function() {
     return ObjectPromiseProxy.create({
