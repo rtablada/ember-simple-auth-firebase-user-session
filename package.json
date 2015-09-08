@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-auth-firebase-user-session",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An opinionated session storage for using Firebase with Ember Simple Auth",
   "directories": {
     "doc": "doc",
