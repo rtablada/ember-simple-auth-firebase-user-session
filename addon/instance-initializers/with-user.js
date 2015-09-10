@@ -3,4 +3,5 @@ export default function(instance) {
   var session = instance.container.lookup('session:with-user');
 
   session.dataStore = store;
+  session.setCurrentUser();
 }
